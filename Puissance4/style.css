@@ -1,0 +1,38 @@
+.jeton{
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: 2px solid black;
+}
+.jeton_rouge{
+    background-color: red;
+}
+.jeton:hover{
+    background: rgb(237, 241, 229);
+}
+.alignspace{
+    display: flex;
+    justify-content: space-around;
+}
+#plateau{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+#recap-score{
+    display: flex;
+    flex-direction: column;
+
+    border: 2px solid grey;
+    width: 20%;
+}
+h1{
+    text-align: center;
+    width: auto;
+}
+button{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
