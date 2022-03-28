@@ -8,5 +8,5 @@ plateau.addEventListener('click',function(c){
 });
 
 //Jeton 0=rouge 1=jaune -1= pas joué
-let ListePlateau = new Array(42);
+let Listeplateau = new Array(42);
 let compteurJ1,compteurJ2 = 0;
