@@ -1,12 +1,27 @@
 const coords = document.getElementById("coords");
-const plateau = document.getElementById("plateau");
+const plateauElt = document.getElementById("plateau");
+const plateau = document.querySelectorAll(".jeton");
 
-plateau.addEventListener('click',function(c){
-    coords.innerHTML ="x : "+c.clientX+ " y : "+c.clientY;
-    const jeton = document.elementFromPoint(c.clientX,c.clientY);
-    jeton.classList.add("jeton_rouge");
+
+plateauElt.addEventListener('click',function(c){
+    plateau[1].classList.add("jeton_rouge");
+
+    // Fonctionne bien
+    // Array.from(P).forEach((element, index) => 
+    // {
+    //     element.classList.add("jeton_rouge");
+    // });
+
+    // coords.innerHTML ="x : "+c.clientX+ " y : "+c.clientY;
+    // const jeton = document.elementFromPoint(c.clientX,c.clientY);
+    // jeton.classList.add("jeton_rouge");
+    // document.querySelectorAll("jeton");
 });
 
-//Jeton 0=rouge 1=jaune -1= pas joué
-let Listeplateau = new Array(42);
-let compteurJ1,compteurJ2 = 0;
+
+// Parcourir element
+// const elements = document.querySelectorAll(".jeton");
+// Array.from(elements).forEach((element, index) => 
+// {
+// valeur += "Valeur " + element.name + ": " + element.value + "\r";
+// });
