@@ -7,12 +7,18 @@
 .jeton_rouge{
     background-color: red;
 }
+.jeton_jaune{
+    background-color: yellow;
+}
 .jeton:hover{
     background: rgb(237, 241, 229);
 }
 .alignspace{
     display: flex;
     justify-content: space-around;
+}
+#start{
+    
 }
 #plateau{
     position: relative;
