@@ -75,7 +75,10 @@ button{
 footer{
     position: absolute;
     bottom: 0;
-    left: auto;
-    right: auto;
-    justify-content: center;
+    left: 40%;
+    right: 40%;
+    width: auto;
+    text-align: center;
+    padding: 3px;
+    border-top: 1px solid black;
 }
