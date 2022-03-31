@@ -72,39 +72,59 @@ function placeInColonne(idC,typeJeton){
     }
 }
 
+
 function partieEstGagnée(id,strtypeJeton) {
     //Horizontalement
-    tmp = new Number(id);
-    let cmpVoisin=-1;
-    
-    while (plateau[tmp].classList.contains(strTypeJeton)  ) {
-        tmp++;
+    let tmp=id,cmpVoisin=-1;
+    while (plateau[tmp].classList.contains(strTypeJeton) ) {
         cmpVoisin++;
+        if (tmp!=41){
+            tmp++;
+        }
+        else{
+            break;
+        }
     }
     tmp = id;
     while (plateau[tmp].classList.contains(strTypeJeton) ) {
-        tmp--;
         cmpVoisin++;
+        if (tmp!=0){
+            tmp--;
+        }
+        else{
+            break;
+        }
     }
-    //Verticalement
-    tmp = id;
-    cmpVoisin = -1;
-    while (plateau[tmp].classList.contains(strTypeJeton)) {
-        tmp=tmp + 7;
-        console.log("+7"+tmp);
-        cmpVoisin++;
-    }
-    tmp = id;
-    while (plateau[tmp].classList.contains(strTypeJeton)) {
-        tmp-=7;
-        console.log("-7"+tmp);
-        cmpVoisin++;
-    }
-    //Diagonale /
 
+    if (cmpVoisin==4) return true;
+    //Verticalement en bas car impossible en haut
+    tmp = id, cmpVoisin = 0;
+    while(plateau[tmp].classList.contains(strTypeJeton) ){
+        cmpVoisin++;
+        if(tmp < 35){
+            tmp+=7;
+        }
+        else{
+            break;
+        }
+    }
+    if (cmpVoisin==4) return true;
+    //Diagonale /
+    tmp = id, cmpVoisin = 0;
+    while(plateau[tmp].classList.contains(strTypeJeton) ){
+        cmpVoisin++;
+        if(tmp != 6){
+            tmp-=6;
+        }
+        else{
+            break;
+        }
+    }
+    if (cmpVoisin==4) {
+        console.log("diagonale")
+        return true;
+    }
     //Diagonale \
-    console.log("voisin : "+cmpVoisin);
-    return (cmpVoisin==4);
 }
 
 bEnd.addEventListener('click',function(_click){
@@ -126,7 +146,9 @@ plateauElt.addEventListener('click',function(click){
             if(plateau[i]===document.elementFromPoint(click.clientX,click.clientY)){
                 joueur,strTypeJeton = changePlayer(joueur);
                 newId = placeInColonne(getColonne(i),strTypeJeton);
-                partieEstGagnée(newId,strTypeJeton);
+                if(partieEstGagnée(newId,strTypeJeton)){
+                    console.log("partie gagnée par "+strTypeJeton);
+                }
                 break;
             }
         }
