@@ -2,8 +2,12 @@ const coords = document.getElementById("coords");
 const plateauElt = document.getElementById("plateau");
 const auTourDe = document.getElementById("auTourDe");
 
+const scoreJ1 = document.getElementById("scoreJ1");
+const scoreJ2 = document.getElementById("scoreJ2");
+
 const bEnd = document.getElementById("end");
 const bRestart = document.getElementById("restart");
+const bRestartTotal = document.getElementById("restartTotal");
 
 const plateau = document.querySelectorAll(".jeton");
 
@@ -20,8 +24,24 @@ const c5 = [5, 12, 19, 26, 33, 40];
 const c6 = [6, 13, 20, 27, 34, 41];
 
 let joueur=2;
+let cmpJ1=0,cmpJ2=0;
+
+function incScore(idGagnant){
+    if(idGagnant==1)cmpJ1++;
+    else if(idGagnant==2)cmpJ2++;
+    scoreJ1.innerHTML = cmpJ1;
+    scoreJ2.innerHTML = cmpJ2;
+}
+
+function restartTotal(){
+    restart();
+    cmpJ1=0,cmpJ2=0;
+    scoreJ1.innerHTML = cmpJ1;
+    scoreJ2.innerHTML = cmpJ2;
+}
 
 function restart(){
+    joueur = 2;
     plateau.forEach(element => {
         if(element.classList.contains("jeton_rouge")){
             element.classList.remove("jeton_rouge");
@@ -37,10 +57,12 @@ function changePlayer(_idJ) {
     if (joueur == 1){
         strTypeJeton = "jeton_jaune";
         joueur = 2;
+        auTourDe.innerHTML ="C'est au tour du joueur 1";
     }
     else {
         strTypeJeton ="jeton_rouge";
         joueur = 1;
+        auTourDe.innerHTML = "C'est au tour du joueur 2";
     }
     return joueur,strTypeJeton;
 }
@@ -77,6 +99,14 @@ function diagonaleValide(i) {
     return !noDiag.includes(i);
 }
 
+function testVoisin(cmp,tmp,strTypeJeton){
+    if (cmp==4) {
+        plateau[tmp].classList.contains(strTypeJeton);
+        return true;
+    }
+    else return false;
+}
+
 function partieEstGagnée(id,strtypeJeton) {
     //Horizontalement
     let tmp=id,cmpVoisin=-1;
@@ -99,7 +129,7 @@ function partieEstGagnée(id,strtypeJeton) {
             break;
         }
     }
-    if (cmpVoisin==4) return true;
+    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     //Verticalement en bas car impossible en haut
     tmp = id, cmpVoisin = 0;
     while(plateau[tmp].classList.contains(strTypeJeton) ){
@@ -111,7 +141,7 @@ function partieEstGagnée(id,strtypeJeton) {
             break;
         }
     }
-    if (cmpVoisin==4) return true;
+    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     
     tmp = id, cmpVoisin = -1;
     if(diagonaleValide(tmp)){
@@ -134,7 +164,7 @@ function partieEstGagnée(id,strtypeJeton) {
                 break;
             }
         }
-        if (cmpVoisin==4) return true;
+        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
         tmp = id, cmpVoisin = -1;
         while(plateau[tmp].classList.contains(strTypeJeton) ){// diagonale \
             cmpVoisin++;
@@ -155,20 +185,38 @@ function partieEstGagnée(id,strtypeJeton) {
                 break;
             }
         }
-        if (cmpVoisin==4) return true;
+        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
 
     }
 }
 
 bEnd.addEventListener('click',function(_click){
     bEnd.style.display = "none" ;
+    bRestart.style.display ="none";
+    auTourDe.innerHTML = "";
     estfinie = true;
+    let vainqueur;
+    if (cmpJ1>cmpJ2){
+        alert("Le vainqueur est donc le joueur 1 !");
+    }
+    else if (cmpJ1<cmpJ2){
+        alert("Le vainqueur est donc le joueur 2 !");
+    }
+    else{
+        alert("Aucun vainqueur égalité parfaite !");
+    }
 });
 
 bRestart.addEventListener('click',()=>{
     restart();
     restart();
     bEnd.style.display ="block";
+});
+
+bRestartTotal.addEventListener('click',()=>{
+    restartTotal();
+    bEnd.style.display = "block";
+    bRestart.style.display = "block"
 });
 
 plateauElt.addEventListener('click',function(click){
@@ -180,14 +228,12 @@ plateauElt.addEventListener('click',function(click){
                 joueur,strTypeJeton = changePlayer(joueur);
                 newId = placeInColonne(getColonne(i),strTypeJeton);
                 if(partieEstGagnée(newId,strTypeJeton)){
-                    alert("partie gagnée par "+strTypeJeton);
-                    restart();
+                    incScore(joueur);
+                    alert("Partie gagnée par Joueur"+joueur+"\n"+
+                    "Veuillez cliquez pour continuez à jouer ");
                 }
                 break;
             }
         }
-    }
-    else{
-
     }
 });

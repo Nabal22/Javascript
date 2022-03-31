@@ -2,16 +2,17 @@
     width: 60px;
     height: 60px;
     border-radius: 30px;
+    margin: 1px;
     border: 2px solid black;
+}
+.jeton:hover{
+    transform: scale(1.05);
 }
 .jeton_rouge{
     background-color: red;
 }
 .jeton_jaune{
     background-color: yellow;
-}
-.jeton:hover{
-    background: rgb(237, 241, 229);
 }
 .joueur1{
     color: red;
@@ -29,6 +30,10 @@
 {
     display : flex;
     justify-content: space-around;
+}
+#auTourDe{
+    max-width: 60%;
+    justify-content: center;
 }
 #plateau{
     position: relative;
