@@ -33,7 +33,7 @@ function restart(){
     estfinie = false;
 }
 
-function changePlayer(idJ) {
+function changePlayer(_idJ) {
     if (joueur == 1){
         strTypeJeton = "jeton_jaune";
         joueur = 2;
@@ -53,17 +53,6 @@ function estDejaJoue(jeton){
     return (jeton.classList.contains("jeton_rouge") || jeton.classList.contains("jeton_jaune"));
 }
 
-bEnd.addEventListener('click',function(click){
-    bEnd.style.display = "none" ;
-    estfinie = true;
-});
-
-bRestart.addEventListener('click',()=>{
-    restart();
-    restart();
-    bEnd.style.display ="block";
-});
-
 function getColonne(i){
     if(c0.includes(i)) return c0;
     else if (c1.includes(i)) return c1;
@@ -78,21 +67,66 @@ function placeInColonne(idC,typeJeton){
     for (let index = 5; index >=0 ; index--) {
         if(estDejaJoue(plateau[idC[index]])==false) {
             plateau[idC[index]].classList.add(typeJeton);
-            break;
+            return idC[index];
         }
     }
 }
 
+function partieEstGagnée(id,strtypeJeton) {
+    //Horizontalement
+    tmp = new Number(id);
+    let cmpVoisin=-1;
+    
+    while (plateau[tmp].classList.contains(strTypeJeton)  ) {
+        tmp++;
+        cmpVoisin++;
+    }
+    tmp = id;
+    while (plateau[tmp].classList.contains(strTypeJeton) ) {
+        tmp--;
+        cmpVoisin++;
+    }
+    //Verticalement
+    tmp = id;
+    cmpVoisin = -1;
+    while (plateau[tmp].classList.contains(strTypeJeton)) {
+        tmp=tmp + 7;
+        console.log("+7"+tmp);
+        cmpVoisin++;
+    }
+    tmp = id;
+    while (plateau[tmp].classList.contains(strTypeJeton)) {
+        tmp-=7;
+        console.log("-7"+tmp);
+        cmpVoisin++;
+    }
+    //Diagonale /
 
+    //Diagonale \
+    console.log("voisin : "+cmpVoisin);
+    return (cmpVoisin==4);
+}
+
+bEnd.addEventListener('click',function(_click){
+    bEnd.style.display = "none" ;
+    estfinie = true;
+});
+
+bRestart.addEventListener('click',()=>{
+    restart();
+    restart();
+    bEnd.style.display ="block";
+});
 
 plateauElt.addEventListener('click',function(click){
-    let i;
+    let i,newId;
     const jeton = document.elementFromPoint(click.clientX,click.clientY);
     if (estfinie == false && clicSurJetonEstValide(jeton)){
         for (i = 0; i < plateau.length; i++) {
             if(plateau[i]===document.elementFromPoint(click.clientX,click.clientY)){
                 joueur,strTypeJeton = changePlayer(joueur);
-                placeInColonne(getColonne(i),strTypeJeton);
+                newId = placeInColonne(getColonne(i),strTypeJeton);
+                partieEstGagnée(newId,strTypeJeton);
                 break;
             }
         }
@@ -101,12 +135,3 @@ plateauElt.addEventListener('click',function(click){
 
     }
 });
-
-// premiere colonne
-
-        // plateau[0].classList.add("jeton_rouge");
-        // plateau[7].classList.add("jeton_rouge");
-        // plateau[14].classList.add("jeton_rouge");
-        // plateau[21].classList.add("jeton_rouge");
-        // plateau[28].classList.add("jeton_rouge");
-        // plateau[35].classList.add("jeton_rouge");

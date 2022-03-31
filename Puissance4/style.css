@@ -13,8 +13,21 @@
 .jeton:hover{
     background: rgb(237, 241, 229);
 }
+.joueur1{
+    color: red;
+}
+.joueur2{
+    color: yellow;
+}
 .alignspace{
     display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.alignscore
+{
+    display : flex;
     justify-content: space-around;
 }
 #plateau{
