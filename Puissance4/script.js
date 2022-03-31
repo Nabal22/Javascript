@@ -12,7 +12,7 @@ const bRestartTotal = document.getElementById("restartTotal");
 const plateau = document.querySelectorAll(".jeton");
 
 let estfinie = false;
-
+let hasStarted = false;
 let strTypeJeton = new String("");
 
 const c0 = [0, 7, 14, 21, 28, 35];
@@ -38,6 +38,8 @@ function restartTotal(){
     cmpJ1=0,cmpJ2=0;
     scoreJ1.innerHTML = cmpJ1;
     scoreJ2.innerHTML = cmpJ2;
+    auTourDe.innerHTML = "Au tour du joueur 1";
+    bRestartTotal.textContent = "Recommencer la partie";
 }
 
 function restart(){
@@ -195,7 +197,7 @@ bEnd.addEventListener('click',function(_click){
     bRestart.style.display ="none";
     auTourDe.innerHTML = "";
     estfinie = true;
-    let vainqueur;
+    hasStarted = false;
     if (cmpJ1>cmpJ2){
         alert("Le vainqueur est donc le joueur 1 !");
     }
@@ -216,13 +218,14 @@ bRestart.addEventListener('click',()=>{
 bRestartTotal.addEventListener('click',()=>{
     restartTotal();
     bEnd.style.display = "block";
-    bRestart.style.display = "block"
+    bRestart.style.display = "block";
+    hasStarted = true;
 });
 
 plateauElt.addEventListener('click',function(click){
     let i,newId;
     const jeton = document.elementFromPoint(click.clientX,click.clientY);
-    if (estfinie == false && clicSurJetonEstValide(jeton)){
+    if (!estfinie && hasStarted && clicSurJetonEstValide(jeton)){
         for (i = 0; i < plateau.length; i++) {
             if(plateau[i]===document.elementFromPoint(click.clientX,click.clientY)){
                 joueur,strTypeJeton = changePlayer(joueur);
