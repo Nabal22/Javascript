@@ -72,6 +72,10 @@ function placeInColonne(idC,typeJeton){
     }
 }
 
+function diagonaleValide(i) {
+    const noDiag = [0,1,2,4,5,6,7,8,12,13,14,20,21,27,28,29,33,34,35,36,37,39,40,41];
+    return !noDiag.includes(i);
+}
 
 function partieEstGagnée(id,strtypeJeton) {
     //Horizontalement
@@ -95,7 +99,6 @@ function partieEstGagnée(id,strtypeJeton) {
             break;
         }
     }
-
     if (cmpVoisin==4) return true;
     //Verticalement en bas car impossible en haut
     tmp = id, cmpVoisin = 0;
@@ -109,22 +112,52 @@ function partieEstGagnée(id,strtypeJeton) {
         }
     }
     if (cmpVoisin==4) return true;
-    //Diagonale /
-    tmp = id, cmpVoisin = 0;
-    while(plateau[tmp].classList.contains(strTypeJeton) ){
-        cmpVoisin++;
-        if(tmp != 6){
-            tmp-=6;
+    
+    tmp = id, cmpVoisin = -1;
+    if(diagonaleValide(tmp)){
+        while(plateau[tmp].classList.contains(strTypeJeton) ){ //Diagonale /
+            cmpVoisin++;
+            if(tmp != 6){
+                tmp-=6;
+            }
+            else{
+                break;
+            }
         }
-        else{
-            break;
+        tmp = id;
+        while(plateau[tmp].classList.contains(strTypeJeton) ){
+            cmpVoisin++;
+            if(tmp < 35){
+                tmp+=6;
+            }
+            else{
+                break;
+            }
         }
+        if (cmpVoisin==4) return true;
+        tmp = id, cmpVoisin = -1;
+        while(plateau[tmp].classList.contains(strTypeJeton) ){// diagonale \
+            cmpVoisin++;
+            if(tmp != 0){
+                tmp-=8;
+            }
+            else{
+                break;
+            }
+        }
+        tmp = id;
+        while(plateau[tmp].classList.contains(strTypeJeton) ){
+            cmpVoisin++;
+            if(tmp < 35){
+                tmp+=8;
+            }
+            else{
+                break;
+            }
+        }
+        if (cmpVoisin==4) return true;
+
     }
-    if (cmpVoisin==4) {
-        console.log("diagonale")
-        return true;
-    }
-    //Diagonale \
 }
 
 bEnd.addEventListener('click',function(_click){
@@ -147,7 +180,8 @@ plateauElt.addEventListener('click',function(click){
                 joueur,strTypeJeton = changePlayer(joueur);
                 newId = placeInColonne(getColonne(i),strTypeJeton);
                 if(partieEstGagnée(newId,strTypeJeton)){
-                    console.log("partie gagnée par "+strTypeJeton);
+                    alert("partie gagnée par "+strTypeJeton);
+                    restart();
                 }
                 break;
             }
