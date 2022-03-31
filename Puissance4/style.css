@@ -5,6 +5,12 @@
     margin: 1px;
     border: 2px solid black;
 }
+.jetonHoverRouge:hover{
+    background-color: rgb(253, 179, 179);
+}
+.jetonHoverJaune:hover{
+    background-color: rgb(236, 229, 129);
+}
 .jeton:hover{
     transform: scale(1.05);
 }
@@ -14,11 +20,11 @@
 .jeton_jaune{
     background-color: yellow;
 }
-.joueur1{
-    color: red;
+.jeton_rouge:hover{
+    background-color: rgb(253, 179, 179);
 }
-.joueur2{
-    color: yellow;
+.jeton_jaune:hover{
+    background-color: rgb(236, 229, 129);
 }
 .alignspace{
     display: flex;
@@ -48,6 +54,13 @@
     border: 2px solid grey;
     width: 20%;
 }
+#end{
+    display: none;
+}
+#restart{
+    display: none;
+}
+
 h1{
     text-align: center;
     width: auto;

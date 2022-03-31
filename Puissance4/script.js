@@ -11,8 +11,7 @@ const bRestartTotal = document.getElementById("restartTotal");
 
 const plateau = document.querySelectorAll(".jeton");
 
-let estfinie = false;
-let hasStarted = false;
+let estfinie = false, hasStarted=false;
 let strTypeJeton = new String("");
 
 const c0 = [0, 7, 14, 21, 28, 35];
@@ -39,7 +38,7 @@ function restartTotal(){
     scoreJ1.innerHTML = cmpJ1;
     scoreJ2.innerHTML = cmpJ2;
     auTourDe.innerHTML = "Au tour du joueur 1";
-    bRestartTotal.textContent = "Recommencer la partie";
+    bRestartTotal.textContent = "Recommencer la partie à zéro";
 }
 
 function restart(){
@@ -60,17 +59,29 @@ function changePlayer(_idJ) {
         strTypeJeton = "jeton_jaune";
         joueur = 2;
         auTourDe.innerHTML ="C'est au tour du joueur 1";
+        hoverBGJeton("jetonHoverRouge");
     }
     else {
         strTypeJeton ="jeton_rouge";
         joueur = 1;
         auTourDe.innerHTML = "C'est au tour du joueur 2";
+        hoverBGJeton("jetonHoverJaune");
     }
     return joueur,strTypeJeton;
 }
 
 function clicSurJetonEstValide(jeton) {
     return (jeton.classList.contains("jeton") && !jeton.classList.contains("jeton_rouge") && !jeton.classList.contains("jeton_jaune"));
+}
+
+function hoverBGJeton(str){
+    plateau.forEach(element => {
+        if (clicSurJetonEstValide(element)){
+            element.classList.remove("jetonHoverRouge");
+            element.classList.remove("jetonHoverJaune");
+            element.classList.add(str);
+        } 
+    });
 }
 
 function estDejaJoue(jeton){
@@ -212,13 +223,15 @@ bEnd.addEventListener('click',function(_click){
 bRestart.addEventListener('click',()=>{
     restart();
     restart();
-    bEnd.style.display ="block";
+    hoverBGJeton("jetonHoverRouge");
+    bRestart.style.display = "none";
+    bRestartTotal.style.display ="none";
 });
 
 bRestartTotal.addEventListener('click',()=>{
     restartTotal();
-    bEnd.style.display = "block";
-    bRestart.style.display = "block";
+    hoverBGJeton("jetonHoverRouge");
+    bRestartTotal.style.display = "none";
     hasStarted = true;
 });
 
@@ -232,8 +245,10 @@ plateauElt.addEventListener('click',function(click){
                 newId = placeInColonne(getColonne(i),strTypeJeton);
                 if(partieEstGagnée(newId,strTypeJeton)){
                     incScore(joueur);
-                    alert("Partie gagnée par Joueur"+joueur+"\n"+
-                    "Veuillez cliquez pour continuez à jouer ");
+                    auTourDe.innerHTML = "Partie gagnée par Joueur"+joueur+"\n"
+                    "Vous pouvez recommencez l'affrontement a zéro ou bien faire une nouvelle manche"
+                    bRestart.style.display = "block";
+                    bRestartTotal.style.display ="block";
                 }
                 break;
             }
