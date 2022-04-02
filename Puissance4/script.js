@@ -107,9 +107,14 @@ function placeInColonne(idC,typeJeton){
     }
 }
 
-function diagonaleValide(i) {
-    const noDiag = [0,1,2,4,5,6,7,8,12,13,14,20,21,27,28,29,33,34,35,36,37,39,40,41];
-    return !noDiag.includes(i);
+function diagonaleDroiteValide(i) {// Celle la : /
+    const noDiagD = [0,1,2,7,8,14,27,33,34,39,40,41];
+    return !noDiagD.includes(i);
+}
+
+function diagonaleGaucheValide(i) {// Celle la : \
+    const noDiagG = [4,5,6,12,13,20,21,28,29,35,36,37];
+    return !noDiagG.includes(i);
 }
 
 function testVoisin(cmp,tmp,strTypeJeton){
@@ -157,7 +162,7 @@ function partieEstGagnée(id,strtypeJeton) {
     if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     
     tmp = id, cmpVoisin = -1;
-    if(diagonaleValide(tmp)){
+    if(diagonaleDroiteValide(tmp)){
         while(plateau[tmp].classList.contains(strTypeJeton) ){ //Diagonale /
             cmpVoisin++;
             if(tmp != 6){
@@ -178,7 +183,10 @@ function partieEstGagnée(id,strtypeJeton) {
             }
         }
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-        tmp = id, cmpVoisin = -1;
+    }
+
+    tmp = id, cmpVoisin = -1;
+    if (diagonaleGaucheValide(tmp)){
         while(plateau[tmp].classList.contains(strTypeJeton) ){// diagonale \
             cmpVoisin++;
             if(tmp != 0){
@@ -199,7 +207,6 @@ function partieEstGagnée(id,strtypeJeton) {
             }
         }
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-
     }
 }
 
