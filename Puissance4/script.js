@@ -9,8 +9,6 @@ const bEnd = document.getElementById("end");
 const bRestart = document.getElementById("restart");
 const bRestartTotal = document.getElementById("restartTotal");
 
-const plateau = document.querySelectorAll(".jeton");
-
 let estfinie = false, hasStarted=false;
 let strTypeJeton = new String("");
 
@@ -24,6 +22,21 @@ const c6 = [6, 13, 20, 27, 34, 41];
 
 let joueur=2;
 let cmpJ1=0,cmpJ2=0;
+
+//On génère les jeton du palteaux de jeu
+for (let i = 0; i < 6; i++) {
+    var newRow = document.createElement("div");
+    newRow.classList.add("row");
+    for (let j = 0; j < 7; j++) {
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("jeton");
+        newDiv.classList.add("col");
+        newRow.appendChild(newDiv);
+    }
+    plateauElt.appendChild(newRow);
+}
+
+const plateau = document.querySelectorAll(".jeton");
 
 function incScore(idGagnant){
     if(idGagnant==1)cmpJ1++;
