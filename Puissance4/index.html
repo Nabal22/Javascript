@@ -13,27 +13,28 @@
 <body>
     <header class="container-fluid align-self-center">
         <h1 class="row justify-content-center">Puissance 4</h1>
-        <h2 id="auTourDe" class="row justify-content-center">Cliquez sur commencer la partie pour jouer</h2>
     </header>
-
     <div id="plateau" class="container">
     </div>
-
-
-    <div class="row justify-content-center">
-        <button type="button" id="restartTotal" class="col-2 btn btn-dark btn-lg alignspace">Commencer la partie</button>
-        <button type="button" id="restart" class="col-2 btn btn-dark btn-lg">Jouer la prochaine manche</button>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div id="auTourDe" class="col-4 btn btn-lg disabled jeton_rouge">Au tour du Joueur 1</div>
+        </div>
+        <div class="row justify-content-center">
+            <button type="button" id="restartTotal" class="col-2 btn btn-dark btn-lg">Commencer la partie</button>
+            <button type="button" id="restart" class="col-2 btn btn-dark btn-lg">Jouer la prochaine manche</button>
+        </div>
     </div>
-    <div id="recap-score" class="alignspace border">
-        <h3 class="alignspace">Score :</h3>
-        <div class="alignscore">
-            <div class="alignspace jeton_rouge">
-                <h3>J1 : </h3>
-                <h3 id="scoreJ1">0</h3>
+    <div id="recap-score" class="container">
+        <h3 class="row justify-content-center">Score :</h3>
+        <div class="row justify-content-center">
+            <div class="col text-center">
+                <h3>Joueur 1</h3>
+                <h3 id="scoreJ1" class="btn btn-lg jeton_rouge">0</h3>
             </div>
-            <div class="alignspace jeton_jaune">
-                <h3> J2 : </h3>
-                <h3 id="scoreJ2">0</h3>
+            <div class="col text-center">
+                <h3>Joueur 2</h3>
+                <h3 id="scoreJ2" class="btn btn-lg jeton_jaune">0</h3>
             </div>
         </div>
     </div>

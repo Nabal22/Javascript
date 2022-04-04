@@ -47,17 +47,18 @@
 .btn{
     margin: 10px;
 }
+#auTourDe{
+    display: none;
+    font-size: x-large;
+}
 #plateau{
     min-width: 650px;
 }
 #recap-score{
-    display: flex;
-    flex-direction: column;
-    border: 2px solid grey;
-    width: 20%;
-}
-#end{
-    display: none;
+    background-color: #1f1f20;
+    width: 500px;
+    padding: 10px;
+    border-radius: 7px;
 }
 #restart{
     display: none;
@@ -69,6 +70,8 @@ body{
 }
 header{
     background-color: #1f1f20;
+    padding: 3px;
+    margin-bottom: 10px;
 }
 footer{
     position: justify;

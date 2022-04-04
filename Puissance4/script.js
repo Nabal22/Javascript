@@ -45,40 +45,33 @@ function incScore(idGagnant){
     scoreJ2.innerHTML = cmpJ2;
 }
 
-function restartTotal(){
-    restart();
-    cmpJ1=0,cmpJ2=0;
-    scoreJ1.innerHTML = cmpJ1;
-    scoreJ2.innerHTML = cmpJ2;
-    auTourDe.innerHTML = "Au tour du joueur 1";
-    bRestartTotal.textContent = "Recommencer la partie à zéro";
-}
 
-function restart(){
-    joueur = 2;
-    plateau.forEach(element => {
-        if(element.classList.contains("jeton_rouge")){
-            element.classList.remove("jeton_rouge");
-        }
-        else if (element.classList.contains("jeton_jaune")){
-            element.classList.remove("jeton_jaune");
-        }
-    });
-    estfinie = false;
+
+function switchColor(){
+    if (auTourDe.classList.contains("jeton_jaune")){
+        auTourDe.classList.remove("jeton_jaune");
+        auTourDe.classList.add("jeton_rouge");
+        auTourDe.innerHTML ="C'est au tour du joueur 1";
+        hoverBGJeton("jetonHoverRouge");
+    }
+    else if (auTourDe.classList.contains("jeton_rouge")){
+        auTourDe.classList.remove("jeton_rouge");
+        auTourDe.classList.add("jeton_jaune");
+        auTourDe.innerHTML = "C'est au tour du joueur 2";
+        hoverBGJeton("jetonHoverJaune");
+    }   
 }
 
 function changePlayer(_idJ) {
     if (joueur == 1){
         strTypeJeton = "jeton_jaune";
         joueur = 2;
-        auTourDe.innerHTML ="C'est au tour du joueur 1";
-        hoverBGJeton("jetonHoverRouge");
+        switchColor();
     }
     else {
         strTypeJeton ="jeton_rouge";
         joueur = 1;
-        auTourDe.innerHTML = "C'est au tour du joueur 2";
-        hoverBGJeton("jetonHoverJaune");
+        switchColor();
     }
     return joueur,strTypeJeton;
 }
@@ -223,22 +216,30 @@ function partieEstGagnée(id,strtypeJeton) {
     }
 }
 
-// bEnd.addEventListener('click',function(_click){
-//     bEnd.style.display = "none" ;
-//     bRestart.style.display ="none";
-//     auTourDe.innerHTML = "";
-//     estfinie = true;
-//     hasStarted = false;
-//     if (cmpJ1>cmpJ2){
-//         alert("Le vainqueur est donc le joueur 1 !");
-//     }
-//     else if (cmpJ1<cmpJ2){
-//         alert("Le vainqueur est donc le joueur 2 !");
-//     }
-//     else{
-//         alert("Aucun vainqueur égalité parfaite !");
-//     }
-// });
+function restart(){
+    auTourDe.classList.remove("active");
+    auTourDe.innerHTML = "Au tour du joueur 1";
+    auTourDe.style.display = "inline";
+
+    joueur = 2;
+    plateau.forEach(element => {
+        if(element.classList.contains("jeton_rouge")){
+            element.classList.remove("jeton_rouge");
+        }
+        else if (element.classList.contains("jeton_jaune")){
+            element.classList.remove("jeton_jaune");
+        }
+    });
+    estfinie = false;
+}
+
+function restartTotal(){
+    restart();
+    cmpJ1=0,cmpJ2=0;
+    scoreJ1.innerHTML = cmpJ1;
+    scoreJ2.innerHTML = cmpJ2;
+    bRestartTotal.textContent = "Recommencer la partie à zéro";
+}
 
 bRestart.addEventListener('click',()=>{
     restart();
@@ -266,9 +267,12 @@ plateauElt.addEventListener('click',function(click){
                 newId = placeInColonne(getColonne(i),strTypeJeton);
                 if(partieEstGagnée(newId,strTypeJeton)){
                     incScore(joueur);
+                    switchColor();
                     auTourDe.innerHTML = "Partie gagnée par Joueur"+joueur+"";
+                    auTourDe.classList.add("active");
                     bRestart.style.display = "inline";
                     bRestartTotal.style.display ="inline";
+                    estfinie = true;
                 }
                 break;
             }
