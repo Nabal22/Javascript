@@ -11,15 +11,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="border container align-self-center">
-        <h1 class="row justify-content-center">Puisance 4</h1>
+    <header class="container-fluid align-self-center">
+        <h1 class="row justify-content-center">Puissance 4</h1>
         <h2 id="auTourDe" class="row justify-content-center">Cliquez sur commencer la partie pour jouer</h2>
     </header>
-    <div id="plateau" class="container border">
+
+    <div id="plateau" class="container">
     </div>
-    <button type="button" id="restartTotal" class="alignspace">Commencer la partie</button>
-    <button type="button" id="end" class="alignspace">Terminer la partie</button>
-    <button type="button" id="restart" class="alignspace">Jouer la prochaine manche</button>
+
+
+    <div class="row justify-content-center">
+        <button type="button" id="restartTotal" class="col-2 btn btn-dark btn-lg alignspace">Commencer la partie</button>
+        <button type="button" id="restart" class="col-2 btn btn-dark btn-lg">Jouer la prochaine manche</button>
+    </div>
     <div id="recap-score" class="alignspace border">
         <h3 class="alignspace">Score :</h3>
         <div class="alignscore">
@@ -35,7 +39,7 @@
     </div>
 
 
-    <footer>Made by Nabal - <a href="https://twitter.com/_nabal_">My Twitter</a> - <a href="https://github.com/Nabal22">My GitHub</a></footer>
+    <!-- <footer>Made by Nabal - <a href="https://twitter.com/_nabal_">My Twitter</a> - <a href="https://github.com/Nabal22">My GitHub</a></footer> -->
     <script type="text/javascript" defer src="script.js"> </script>
 </body>
 </html>

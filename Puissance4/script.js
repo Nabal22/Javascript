@@ -27,10 +27,10 @@ let cmpJ1=0,cmpJ2=0;
 for (let i = 0; i < 6; i++) {
     var newRow = document.createElement("div");
     newRow.classList.add("row");
+    newRow.classList.add("justify-content-center");
     for (let j = 0; j < 7; j++) {
         var newDiv = document.createElement("div");
         newDiv.classList.add("jeton");
-        newDiv.classList.add("col");
         newRow.appendChild(newDiv);
     }
     plateauElt.appendChild(newRow);
@@ -223,22 +223,22 @@ function partieEstGagnée(id,strtypeJeton) {
     }
 }
 
-bEnd.addEventListener('click',function(_click){
-    bEnd.style.display = "none" ;
-    bRestart.style.display ="none";
-    auTourDe.innerHTML = "";
-    estfinie = true;
-    hasStarted = false;
-    if (cmpJ1>cmpJ2){
-        alert("Le vainqueur est donc le joueur 1 !");
-    }
-    else if (cmpJ1<cmpJ2){
-        alert("Le vainqueur est donc le joueur 2 !");
-    }
-    else{
-        alert("Aucun vainqueur égalité parfaite !");
-    }
-});
+// bEnd.addEventListener('click',function(_click){
+//     bEnd.style.display = "none" ;
+//     bRestart.style.display ="none";
+//     auTourDe.innerHTML = "";
+//     estfinie = true;
+//     hasStarted = false;
+//     if (cmpJ1>cmpJ2){
+//         alert("Le vainqueur est donc le joueur 1 !");
+//     }
+//     else if (cmpJ1<cmpJ2){
+//         alert("Le vainqueur est donc le joueur 2 !");
+//     }
+//     else{
+//         alert("Aucun vainqueur égalité parfaite !");
+//     }
+// });
 
 bRestart.addEventListener('click',()=>{
     restart();
@@ -252,6 +252,7 @@ bRestartTotal.addEventListener('click',()=>{
     restartTotal();
     hoverBGJeton("jetonHoverRouge");
     bRestartTotal.style.display = "none";
+    bRestart.style.display = "none";
     hasStarted = true;
 });
 
@@ -265,10 +266,9 @@ plateauElt.addEventListener('click',function(click){
                 newId = placeInColonne(getColonne(i),strTypeJeton);
                 if(partieEstGagnée(newId,strTypeJeton)){
                     incScore(joueur);
-                    auTourDe.innerHTML = "Partie gagnée par Joueur"+joueur+"\n"
-                    "Vous pouvez recommencez l'affrontement a zéro ou bien faire une nouvelle manche"
-                    bRestart.style.display = "block";
-                    bRestartTotal.style.display ="block";
+                    auTourDe.innerHTML = "Partie gagnée par Joueur"+joueur+"";
+                    bRestart.style.display = "inline";
+                    bRestartTotal.style.display ="inline";
                 }
                 break;
             }

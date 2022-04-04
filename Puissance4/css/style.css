@@ -1,13 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
+
 .jeton{
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
+    width : 80px;
+    height: 80px;
+    border-radius: 40px;
     margin: 1px;
-    border: 2px solid black;
-    background-color: white;
-}
-@media screen {
-    
+    border: 4px solid rgb(59, 59, 59);
 }
 .jetonHoverRouge:hover{
     background-color: rgb(253, 179, 179);
@@ -46,9 +44,11 @@
     border: #565a2f solid 2px;
     border-radius: 10px;
 }
+.btn{
+    margin: 10px;
+}
 #plateau{
-    background-color: #33351b;
-    width: 450px;
+    min-width: 650px;
 }
 #recap-score{
     display: flex;
@@ -63,21 +63,12 @@
     display: none;
 }
 body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family:'Outfit', sans-serif;
     background-color: #0E0E0F;
     color: white;
 }
 header{
-    max-width: 800px;
-    margin: 1%;
-    background-color: #33351b;
-}
-button{
-    text-align: center;
-    padding : 5px;
-    margin: 5px;
-    margin-left: auto;
-    margin-right: auto;
+    background-color: #1f1f20;
 }
 footer{
     position: justify;
