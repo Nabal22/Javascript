@@ -20,6 +20,9 @@
     border: 1px solid #333333;
     box-shadow: 0px 3px 3px 0px #333333;
 }
+.noWin{
+    background-color: #1f1f20;
+}
 .btn:hover{
     box-shadow: #606063 0px 5px,    
     #3d3d3f 0px 10px

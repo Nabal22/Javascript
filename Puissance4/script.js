@@ -28,8 +28,7 @@ const c4 = [4, 11, 18, 25, 32, 39];
 const c5 = [5, 12, 19, 26, 33, 40];
 const c6 = [6, 13, 20, 27, 34, 41];
 
-let joueur=2;
-let cmpJ1=0,cmpJ2=0;
+let joueur=2,cmpJ1=0,cmpJ2=0,cmpPlays=0;
 
 //On génère les jeton du palteaux de jeu
 for (let i = 0; i < 6; i++) {
@@ -174,7 +173,7 @@ function partieEstGagnée(id,strtypeJeton) {
     
     tmp = id, cmpVoisin = -1;
     if(diagonaleDroiteValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) ){ //Diagonale /
+        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c6.includes(tmp)){ //Diagonale /
             cmpVoisin++;
             if(tmp != 6){
                 tmp-=6;
@@ -183,8 +182,7 @@ function partieEstGagnée(id,strtypeJeton) {
                 break;
             }
         }
-        tmp = id;
-        while(plateau[tmp].classList.contains(strTypeJeton) ){
+        while(plateau[tmp].classList.contains(strTypeJeton)  && !c0.includes(tmp) && tmp < 35){
             cmpVoisin++;
             if(tmp < 35){
                 tmp+=6;
@@ -198,7 +196,7 @@ function partieEstGagnée(id,strtypeJeton) {
 
     tmp = id, cmpVoisin = -1;
     if (diagonaleGaucheValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) ){// diagonale \
+        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c0.includes(tmp) ){// diagonale \
             cmpVoisin++;
             if(tmp != 0){
                 tmp-=8;
@@ -207,8 +205,9 @@ function partieEstGagnée(id,strtypeJeton) {
                 break;
             }
         }
-        tmp = id;
-        while(plateau[tmp].classList.contains(strTypeJeton) ){
+        tmp=id;
+
+        while(plateau[tmp].classList.contains(strTypeJeton) && !c6.includes(tmp) &&  tmp < 35 ){
             cmpVoisin++;
             if(tmp < 35){
                 tmp+=8;
@@ -288,13 +287,14 @@ bRestartTotal.addEventListener('click',()=>{
     hasStarted = true;
 });
 
+
 plateauElt.addEventListener('click',function(click){
     let i,newId;
     const jeton = document.elementFromPoint(click.clientX,click.clientY);
     if (!estfinie && hasStarted && clicSurJetonEstValide(jeton)){
-        console.log("test");
         for (i = 0; i < plateau.length; i++) {
             if(plateau[i]===document.elementFromPoint(click.clientX,click.clientY)){
+                cmpPlays++;
                 joueur,strTypeJeton = changePlayer(joueur);
                 newId = placeInColonne(getColonne(i),strTypeJeton);
                 if(partieEstGagnée(newId,strTypeJeton)){
@@ -306,10 +306,18 @@ plateauElt.addEventListener('click',function(click){
                     bRestartTotal.style.display ="inline";
                     endGameModel.style.display = "flex";
                     estfinie = true;
-                    console.log("partie finie");
                 }
                 break;
             }
+        }//Egalite
+        console.log(cmpPlays);
+        if (cmpPlays==42) {
+            winBy.innerHTML = "C'est une égalité";
+            winBy.style.display = "inline";
+            bRestart.style.display = "inline";
+            bRestartTotal.style.display ="inline";
+            endGameModel.style.display = "flex";
+            estfinie = true;
         }
     }
 });
