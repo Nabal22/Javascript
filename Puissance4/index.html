@@ -9,33 +9,72 @@
 </head>
 <body>
     <div class="header center">
-        <button type="button" id="rules" class="btn">?</button>
+        <img id="rulesBtn" src="img/rules.png" alt="Rules" class="btn icon">
         <h1>Puissance 4</h1>
-        <button type="button" id="showScore" class="btn">S</button>
+        <img id="showScore" src="img/score.png" alt="Score" class="btn icon">
     </div>
     <div class="center">
         <div id="plateau">
 
         </div>
     </div>
-    <div class="center">
-        <div id="auTourDe" class="btn jeton_rouge">Au tour du Joueur 1</div>
-        <button type="button" id="start" class="btn">Commencer la partie</button>
+    <div class="center ">
+        <div id="auTourDe" class="btn bigBtn fakeBtn jeton_rouge">Au tour du Joueur 1</div>
+        <button type="button" id="start" class="btn bigBtn">Commencer la partie</button>
     </div>
-    <div id="endGameModel">
-        <div id="recap-score">
+    <div id="endGameModel" class="popupModel">
+        <div class="popupModelContent">
+            <div class="center relative">
+                <h2>Score :</h2>
+                <img id="closeBtn" src="img/close.svg" alt="Fermer" class="btn icon closeBtn">
+            </div>
             <div class="center">
-                <h3 class="center">Score :</h3>
-                <img id="closeBtn" src="img/close.svg" alt="Fermer" class="btn icon">
-            </div>    
-            <h3>Joueur 1</h3>
-            <h3 id="scoreJ1" class="btn btn-lg jeton_rouge">0</h3>
-            <h3>Joueur 2</h3>
-            <h3 id="scoreJ2" class="btn btn-lg jeton_jaune">0</h3>
-            <div class="center">
+                <div id="winBy" class="btn bigBtn fakeBtn jeton_rouge"></div>
+            </div>
+            <div class="sapcearound">
+                <div class="column">
+                    <h3>Joueur 1</h3>
+                    <h3 id="scoreJ1" class="btn jeton_rouge score fakeBtn">0</h3>
+                </div>
+                <div class="column" >
+                    <h3>Joueur 2</h3>
+                    <h3 id="scoreJ2" class="btn jeton_jaune score fakeBtn">0</h3>
+                </div>
+            </div>
+            <div class="center bottomBtn">
                 <button type="button" id="restartTotal" class="btn">Recommencer la partie</button>
                 <button type="button" id="restart" class="btn">Jouer la prochaine manche</button>
             </div>
+        </div>
+    </div>
+    <div id="rules" class="popupModel">
+        <div class="popupModelContent">
+            <div class="center relative">
+                <h2>Rêgle Du Jeu :</h2>
+                <img id="closeBtnRules" src="img/close.svg" alt="Fermer" class="btn icon closeBtn">
+            </div>
+            <h1 class="btn fakeBtn">But Du Jeu</h1>
+            <p>Le but du jeu est d'aligner une suite de 4 pions de même couleur 
+                sur une grille comptant 6 rangées et 7 colonnes.
+            </p>
+            <h1 class="btn fakeBtn">Déroulement Du Jeu</h1>
+            <p>
+            Chaque joueur dispose de 21 pions d'une couleur (par convention, en général jaune ou rouge).
+            <br> 
+            Tour à tour, les deux joueurs placent un pion dans la colonne de leur choix, 
+            le pion coulisse alors jusqu'à la position la plus basse possible dans la dite colonne 
+            à la suite de quoi c'est à l'adversaire de jouer. 
+            </p>
+            <h1 class="btn fakeBtn">Fin Du Jeu</h1>
+            <p>
+            Le vainqueur est le joueur qui réalise le premier un alignement (horizontal, vertical ou diagonal) 
+            consécutif d'au moins quatre pions de sa couleur.
+            </p>
+            <p>
+            Si, alors que toutes les cases de la grille de jeu sont remplies,
+            aucun des deux joueurs n'a réalisé un tel alignement, 
+            la partie est déclarée nulle.
+            </p>
         </div>
     </div>
     <script type="text/javascript" defer src="script.js"> </script>

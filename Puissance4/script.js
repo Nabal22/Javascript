@@ -1,7 +1,9 @@
 const coords = document.getElementById("coords");
 const plateauElt = document.getElementById("plateau");
 const auTourDe = document.getElementById("auTourDe");
-const endGameModel = document.getElementById("endGameModel")
+const winBy = document.getElementById("winBy");
+const endGameModel = document.getElementById("endGameModel");
+const rules = document.getElementById("rules");
 
 const scoreJ1 = document.getElementById("scoreJ1");
 const scoreJ2 = document.getElementById("scoreJ2");
@@ -9,9 +11,11 @@ const scoreJ2 = document.getElementById("scoreJ2");
 const bStart = document.getElementById("start");
 const bRestart = document.getElementById("restart");
 const bRestartTotal = document.getElementById("restartTotal");
-
 const bClose = document.getElementById("closeBtn");
+const bCloseBtnRules = document.getElementById("closeBtnRules");
+
 const bShowScore = document.getElementById("showScore");
+const rulesBtn = document.getElementById("rulesBtn");
 
 let estfinie = false, hasStarted=false;
 let strTypeJeton = new String("");
@@ -241,6 +245,10 @@ function restartTotal(){
     scoreJ2.innerHTML = cmpJ2;
 }
 
+rulesBtn.addEventListener('click',()=>{
+    rules.style.display ="flex";
+});
+
 bShowScore.addEventListener('click',()=>{
     endGameModel.style.display ="flex";
 });
@@ -249,9 +257,14 @@ bClose.addEventListener('click',()=>{
     endGameModel.style.display = "none";
 });
 
+bCloseBtnRules.addEventListener('click',()=>{
+    rules.style.display = "none";
+});
+
 bStart.addEventListener('click',()=>{
     restartTotal();
     bStart.style.display ="none";
+    auTourDe.style.display ="inline";
     estfinie = false;
     hasStarted = true;
     hoverBGJeton("jetonHoverRouge");
@@ -261,16 +274,16 @@ bRestart.addEventListener('click',()=>{
     restart();
     restart();
     hoverBGJeton("jetonHoverRouge");
-    bRestart.style.display = "none";
-    bRestartTotal.style.display ="none";
     endGameModel.style.display = "none";
+    bStart.style.display = "none";
+    winBy.style.display = "none";
 });
 
 bRestartTotal.addEventListener('click',()=>{
     restartTotal();
     hoverBGJeton("jetonHoverRouge");
-    bRestartTotal.style.display = "none";
-    bRestart.style.display = "none";
+    auTourDe.style.display = "inline";
+    winBy.style.display = "none";
     endGameModel.style.display = "none";
     hasStarted = true;
 });
@@ -287,8 +300,8 @@ plateauElt.addEventListener('click',function(click){
                 if(partieEstGagnée(newId,strTypeJeton)){
                     incScore(joueur);
                     switchColor();
-                    auTourDe.innerHTML = "Partie gagnée par Joueur"+joueur+"";
-                    auTourDe.classList.add("active");
+                    winBy.innerHTML = "Partie gagnée par Joueur"+joueur+"";
+                    winBy.style.display = "inline";
                     bRestart.style.display = "inline";
                     bRestartTotal.style.display ="inline";
                     endGameModel.style.display = "flex";
