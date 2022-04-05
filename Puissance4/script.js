@@ -26,8 +26,7 @@ let cmpJ1=0,cmpJ2=0;
 //On génère les jeton du palteaux de jeu
 for (let i = 0; i < 6; i++) {
     var newRow = document.createElement("div");
-    newRow.classList.add("row");
-    newRow.classList.add("justify-content-center");
+    newRow.classList.add("ligne");
     for (let j = 0; j < 7; j++) {
         var newDiv = document.createElement("div");
         newDiv.classList.add("jeton");
