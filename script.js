@@ -128,7 +128,7 @@ function diagonaleGaucheValide(i) {// Celle la : \
 }
 
 function testVoisin(cmp,tmp,strTypeJeton){
-    if (cmp==4) {
+    if (cmp>=4) {
         plateau[tmp].classList.contains(strTypeJeton);
         return true;
     }
@@ -140,6 +140,7 @@ function partieEstGagnée(id,strtypeJeton) {
     let tmp=id,cmpVoisin=-1;
     while (plateau[tmp].classList.contains(strTypeJeton) ) {
         cmpVoisin++;
+        console.log("Cmp voisin droite "+cmpVoisin);
         if (tmp!=41){
             tmp++;
         }
@@ -150,6 +151,7 @@ function partieEstGagnée(id,strtypeJeton) {
     tmp = id;
     while (plateau[tmp].classList.contains(strTypeJeton) ) {
         cmpVoisin++;
+        console.log("Cmp voisin Gauche "+cmpVoisin);
         if (tmp!=0){
             tmp--;
         }
@@ -171,7 +173,7 @@ function partieEstGagnée(id,strtypeJeton) {
     }
     if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     
-    tmp = id, cmpVoisin = -1;
+    tmp = id, cmpVoisin = 0;
     if(diagonaleDroiteValide(tmp)){
         while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c6.includes(tmp)){ //Diagonale /
             cmpVoisin++;
@@ -182,6 +184,7 @@ function partieEstGagnée(id,strtypeJeton) {
                 break;
             }
         }
+        tmp = id
         while(plateau[tmp].classList.contains(strTypeJeton)  && !c0.includes(tmp) && tmp < 35){
             cmpVoisin++;
             if(tmp < 35){
@@ -194,7 +197,7 @@ function partieEstGagnée(id,strtypeJeton) {
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     }
 
-    tmp = id, cmpVoisin = -1;
+    tmp = id, cmpVoisin = 0;
     if (diagonaleGaucheValide(tmp)){
         while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c0.includes(tmp) ){// diagonale \
             cmpVoisin++;
