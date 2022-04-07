@@ -140,7 +140,6 @@ function partieEstGagnée(id,strtypeJeton) {
     let tmp=id,cmpVoisin=-1;
     while (plateau[tmp].classList.contains(strTypeJeton) ) {
         cmpVoisin++;
-        console.log("Cmp voisin droite "+cmpVoisin);
         if (tmp!=41){
             tmp++;
         }
@@ -151,7 +150,6 @@ function partieEstGagnée(id,strtypeJeton) {
     tmp = id;
     while (plateau[tmp].classList.contains(strTypeJeton) ) {
         cmpVoisin++;
-        console.log("Cmp voisin Gauche "+cmpVoisin);
         if (tmp!=0){
             tmp--;
         }
@@ -159,7 +157,9 @@ function partieEstGagnée(id,strtypeJeton) {
             break;
         }
     }
-    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+    if (testVoisin(cmpVoisin,tmp,strTypeJeton)){
+        return true;
+    }
     //Verticalement en bas car impossible en haut
     tmp = id, cmpVoisin = 0;
     while(plateau[tmp].classList.contains(strTypeJeton) ){
@@ -171,63 +171,68 @@ function partieEstGagnée(id,strtypeJeton) {
             break;
         }
     }
-    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) {
+        return true;
+    }
     
     tmp = id, cmpVoisin = 0;
     if(diagonaleDroiteValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c6.includes(tmp)){ //Diagonale /
+        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 6 && !c6.includes(tmp)){ //Diagonale /
             cmpVoisin++;
-            if(tmp != 6){
-                tmp-=6;
-            }
-            else{
-                break;
-            }
+            tmp-=6;
         }
-        tmp = id
+        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+        tmp = id;
+        --cmpVoisin
         while(plateau[tmp].classList.contains(strTypeJeton)  && !c0.includes(tmp) && tmp < 35){
             cmpVoisin++;
-            if(tmp < 35){
-                tmp+=6;
-            }
-            else{
-                break;
-            }
+            tmp+=6;
+
         }
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     }
 
-    tmp = id, cmpVoisin = 0;
+    tmp = id, cmpVoisin = 0 ;
     if (diagonaleGaucheValide(tmp)){
         while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c0.includes(tmp) ){// diagonale \
             cmpVoisin++;
-            if(tmp != 0){
-                tmp-=8;
-            }
-            else{
-                break;
-            }
+            tmp-=8;
         }
+        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
         tmp=id;
-
+        --cmpVoisin;
         while(plateau[tmp].classList.contains(strTypeJeton) && !c6.includes(tmp) &&  tmp < 35 ){
             cmpVoisin++;
-            if(tmp < 35){
-                tmp+=8;
-            }
-            else{
-                break;
-            }
+            tmp+=8;
         }
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     }
 }
 
+rulesBtn.addEventListener('click',()=>{
+    rules.style.display ="flex";
+});
+
+bShowScore.addEventListener('click',()=>{
+    endGameModel.style.display ="flex";
+});
+
+bClose.addEventListener('click',()=>{
+    endGameModel.style.display = "none";
+});
+
+bCloseBtnRules.addEventListener('click',()=>{
+    rules.style.display = "none";
+});
+
+
 function restart(){
     auTourDe.classList.remove("active");
     auTourDe.innerHTML = "Au tour du joueur 1";
+    auTourDe.classList.remove("jeton_jaune");
+    auTourDe.classList.add("jeton_rouge");
     auTourDe.style.display = "inline";
-
+    hoverBGJeton("jetonHoverRouge");
     joueur = 2;
     plateau.forEach(element => {
         if(element.classList.contains("jeton_rouge")){
@@ -247,21 +252,6 @@ function restartTotal(){
     scoreJ2.innerHTML = cmpJ2;
 }
 
-rulesBtn.addEventListener('click',()=>{
-    rules.style.display ="flex";
-});
-
-bShowScore.addEventListener('click',()=>{
-    endGameModel.style.display ="flex";
-});
-
-bClose.addEventListener('click',()=>{
-    endGameModel.style.display = "none";
-});
-
-bCloseBtnRules.addEventListener('click',()=>{
-    rules.style.display = "none";
-});
 
 bStart.addEventListener('click',()=>{
     restartTotal();
@@ -269,13 +259,10 @@ bStart.addEventListener('click',()=>{
     auTourDe.style.display ="inline";
     estfinie = false;
     hasStarted = true;
-    hoverBGJeton("jetonHoverRouge");
 });
 
 bRestart.addEventListener('click',()=>{
     restart();
-    restart();
-    hoverBGJeton("jetonHoverRouge");
     endGameModel.style.display = "none";
     bStart.style.display = "none";
     winBy.style.display = "none";
@@ -283,7 +270,6 @@ bRestart.addEventListener('click',()=>{
 
 bRestartTotal.addEventListener('click',()=>{
     restartTotal();
-    hoverBGJeton("jetonHoverRouge");
     auTourDe.style.display = "inline";
     winBy.style.display = "none";
     endGameModel.style.display = "none";
@@ -304,6 +290,9 @@ plateauElt.addEventListener('click',function(click){
                     incScore(joueur);
                     switchColor();
                     winBy.innerHTML = "Partie gagnée par Joueur"+joueur+"";
+                    winBy.classList.remove("jeton_rouge");
+                    winBy.classList.remove("jeton_jaune");
+                    winBy.classList.add(strTypeJeton);
                     winBy.style.display = "inline";
                     bRestart.style.display = "inline";
                     bRestartTotal.style.display ="inline";
@@ -313,7 +302,6 @@ plateauElt.addEventListener('click',function(click){
                 break;
             }
         }//Egalite
-        console.log(cmpPlays);
         if (cmpPlays==42) {
             winBy.innerHTML = "C'est une égalité";
             winBy.style.display = "inline";
