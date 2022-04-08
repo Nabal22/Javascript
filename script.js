@@ -130,11 +130,39 @@ function diagonaleGaucheValide(i) {// Celle la : \
 function testVoisin(cmp,tmp,strTypeJeton){
     if (cmp>=4) {
         plateau[tmp].classList.contains(strTypeJeton);
+        console.log(cmp);
         return true;
     }
     else return false;
 }
 
+function checkDiag(tmp,incDecTmp,typeDiag) {
+    let i, tmpDiag = 0;
+    if (typeDiag=="/"){
+        for (i = 0 ; i < 4; i++) {
+            console.log("tmp "+ tmp);
+            if (diagonaleDroiteValide(tmp) && plateau[tmp].classList.contains(strTypeJeton)){
+                tmp-= incDecTmp ;
+                console.log("in for");
+            }
+            else{
+                break;
+            }
+        }
+        tmpDiag = i;
+        for (i = 0; i < 4; i++) {
+            console.log("tmp "+ tmp);
+            if (diagonaleDroiteValide(tmp) && plateau[tmp].classList.contains(strTypeJeton)){
+                tmp+= incDecTmp ;
+                console.log("in for");
+            }
+            else{
+                break;
+            }
+        }
+        if (i>=3) return true;
+    }
+}
 function partieEstGagnée(id,strtypeJeton) {
     //Horizontalement
     let tmp=id,cmpVoisin=-1;
@@ -174,39 +202,35 @@ function partieEstGagnée(id,strtypeJeton) {
     if (testVoisin(cmpVoisin,tmp,strTypeJeton)) {
         return true;
     }
-    
-    tmp = id, cmpVoisin = 0;
-    if(diagonaleDroiteValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 6 && !c6.includes(tmp)){ //Diagonale /
-            cmpVoisin++;
-            tmp-=6;
-        }
-        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-        tmp = id;
-        --cmpVoisin
-        while(plateau[tmp].classList.contains(strTypeJeton)  && !c0.includes(tmp) && tmp < 35){
-            cmpVoisin++;
-            tmp+=6;
+    if (checkDiag(id,6,"/")) return true;
+    // if(diagonaleDroiteValide(tmp)){
+    //     while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 6 && !c6.includes(tmp)){ //Diagonale /
+    //         cmpVoisin++;
+    //         tmp-=6;
+    //     }
+    //     if (testVoisin(cmpVoisin,tmp,strTypeJeton))return true;
+    //     tmp = id;
+    //     while(plateau[tmp].classList.contains(strTypeJeton)  && !c0.includes(tmp) && tmp < 35){
+    //         cmpVoisin++;
+    //         tmp+=6;
+    //     }
+    //     if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+    // }
 
-        }
-        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-    }
-
-    tmp = id, cmpVoisin = 0 ;
-    if (diagonaleGaucheValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c0.includes(tmp) ){// diagonale \
-            cmpVoisin++;
-            tmp-=8;
-        }
-        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-        tmp=id;
-        --cmpVoisin;
-        while(plateau[tmp].classList.contains(strTypeJeton) && !c6.includes(tmp) &&  tmp < 35 ){
-            cmpVoisin++;
-            tmp+=8;
-        }
-        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-    }
+    // tmp = id, cmpVoisin = 0 ;
+    // if (diagonaleGaucheValide(tmp)){
+    //     while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c0.includes(tmp) ){// diagonale \
+    //         cmpVoisin++;
+    //         tmp-=8;
+    //     }
+    //     if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+    //     tmp=id;
+    //     while(plateau[tmp].classList.contains(strTypeJeton) && !c6.includes(tmp) &&  tmp < 35 ){
+    //         cmpVoisin++;
+    //         tmp+=8;
+    //     }
+    //     if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+    // }
 }
 
 rulesBtn.addEventListener('click',()=>{
