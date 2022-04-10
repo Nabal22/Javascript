@@ -128,14 +128,21 @@ function diagonaleGaucheValide(i) {// Celle la : \
 }
 
 function testVoisin(cmp,tmp,strTypeJeton){
+    console.log("cmp "+cmp+" tmp "+tmp+" "+strTypeJeton);
     if (cmp>=4) {
         plateau[tmp].classList.contains(strTypeJeton);
+        console.log("true");
         return true;
     }
-    else return false;
+    else {
+        console.log("false");
+        return false;
+    }
 }
 
+
 function partieEstGagnée(id,strtypeJeton) {
+    console.log("----------------------");
     //Horizontalement
     let tmp=id,cmpVoisin=-1;
     while (plateau[tmp].classList.contains(strTypeJeton) ) {
@@ -171,39 +178,58 @@ function partieEstGagnée(id,strtypeJeton) {
             break;
         }
     }
-    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) {
-        return true;
-    }
-    
+    if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+
     tmp = id, cmpVoisin = 0;
     if(diagonaleDroiteValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 6 && !c6.includes(tmp)){ //Diagonale /
+        while(plateau[tmp].classList.contains(strTypeJeton)){ //Diagonale /
             cmpVoisin++;
-            tmp-=6;
+            if  (tmp > 6 && !c6.includes(tmp)){
+                tmp-=6;
+            }
+            else{
+                break;
+            }
+        }
+        if (testVoisin(cmpVoisin,tmp,strTypeJeton))return true;
+        console.log("after first diag right "+cmpVoisin);
+        tmp = id;
+        --cmpVoisin;
+        while(plateau[tmp].classList.contains(strTypeJeton)){
+            cmpVoisin++;
+            if  (tmp < 35 && !c0.includes(tmp)){
+                tmp+=6;
+            }
+            else{
+                break;
+            }
+        }
+        console.log(cmpVoisin);
+        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
+    }
+
+    tmp = id, cmpVoisin = 0;
+    if (diagonaleGaucheValide(tmp)){
+        while(plateau[tmp].classList.contains(strTypeJeton)){// diagonale \
+            cmpVoisin++;
+            if  (tmp > 7 && !c0.includes(tmp)){
+                tmp-=8;
+            }
+            else{
+                break;
+            }
         }
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
         tmp = id;
-        --cmpVoisin
-        while(plateau[tmp].classList.contains(strTypeJeton)  && !c0.includes(tmp) && tmp < 35){
-            cmpVoisin++;
-            tmp+=6;
-
-        }
-        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-    }
-
-    tmp = id, cmpVoisin = 0 ;
-    if (diagonaleGaucheValide(tmp)){
-        while(plateau[tmp].classList.contains(strTypeJeton) && tmp > 7 && !c0.includes(tmp) ){// diagonale \
-            cmpVoisin++;
-            tmp-=8;
-        }
-        if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
-        tmp=id;
         --cmpVoisin;
-        while(plateau[tmp].classList.contains(strTypeJeton) && !c6.includes(tmp) &&  tmp < 35 ){
+        while(plateau[tmp].classList.contains(strTypeJeton)){
             cmpVoisin++;
-            tmp+=8;
+            if  (tmp < 35 && !c6.includes(tmp)){
+                tmp+=8;
+            }
+            else{
+                break;
+            }
         }
         if (testVoisin(cmpVoisin,tmp,strTypeJeton)) return true;
     }
