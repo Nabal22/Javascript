@@ -28,7 +28,18 @@ const c4 = [4, 11, 18, 25, 32, 39];
 const c5 = [5, 12, 19, 26, 33, 40];
 const c6 = [6, 13, 20, 27, 34, 41];
 
+
 let joueur=2,cmpJ1=0,cmpJ2=0,cmpPlays=0;
+
+//Local Storage
+const lCmpJ1 = localStorage.getItem("scoreJ1");
+const lCmpJ2 = localStorage.getItem("scoreJ2");
+
+cmpJ1 = lCmpJ1;
+cmpJ2 = lCmpJ2;
+
+scoreJ1.innerText = cmpJ1;
+scoreJ2.innerText = cmpJ2;
 
 //On génère les jeton du palteaux de jeu
 for (let i = 0; i < 6; i++) {
@@ -47,8 +58,10 @@ const plateau = document.querySelectorAll(".jeton");
 function incScore(idGagnant){
     if(idGagnant==1)cmpJ1++;
     else if(idGagnant==2)cmpJ2++;
-    scoreJ1.innerHTML = cmpJ1;
-    scoreJ2.innerHTML = cmpJ2;
+    localStorage.setItem("scoreJ1",cmpJ1);
+    localStorage.setItem("scoreJ2",cmpJ2);
+    scoreJ1.innerText = cmpJ1;
+    scoreJ2.innerText = cmpJ2;
 }
 
 function switchColor(){
@@ -66,7 +79,7 @@ function switchColor(){
     }   
 }
 
-function changePlayer(_idJ) {
+function changePlayer() {
     if (joueur == 1){
         strTypeJeton = "jeton_jaune";
         joueur = 2;
@@ -139,7 +152,6 @@ function testVoisin(cmp,tmp,strTypeJeton){
         return false;
     }
 }
-
 
 function partieEstGagnée(id,strtypeJeton) {
     console.log("----------------------");
@@ -276,11 +288,12 @@ function restartTotal(){
     cmpJ1=0,cmpJ2=0;
     scoreJ1.innerHTML = cmpJ1;
     scoreJ2.innerHTML = cmpJ2;
+    localStorage.setItem("scoreJ1",cmpJ1);
+    localStorage.setItem("scoreJ2",cmpJ2);
 }
 
-
 bStart.addEventListener('click',()=>{
-    restartTotal();
+    restart();
     bStart.style.display ="none";
     auTourDe.style.display ="inline";
     estfinie = false;
@@ -301,7 +314,6 @@ bRestartTotal.addEventListener('click',()=>{
     endGameModel.style.display = "none";
     hasStarted = true;
 });
-
 
 plateauElt.addEventListener('click',function(click){
     let i,newId;
