@@ -29,7 +29,7 @@ const c5 = [5, 12, 19, 26, 33, 40];
 const c6 = [6, 13, 20, 27, 34, 41];
 
 
-let joueur=2,cmpJ1=0,cmpJ2=0,cmpPlays=0;
+let joueur=2,cmpJ1=0,cmpJ2=0,cmpPlays=0; 
 
 //Local Storage
 const lCmpJ1 = localStorage.getItem("scoreJ1");
@@ -38,7 +38,12 @@ const lCmpJ2 = localStorage.getItem("scoreJ2");
 cmpJ1 = lCmpJ1;
 cmpJ2 = lCmpJ2;
 
-scoreJ1.innerText = cmpJ1;
+
+
+if (cmpJ1===null) cmpJ1 = 0;
+if (cmpJ2===null) cmpJ2 = 0;
+
+scoreJ1.innerText = cmpJ1; 
 scoreJ2.innerText = cmpJ2;
 
 //On génère les jeton du palteaux de jeu
@@ -265,7 +270,7 @@ bCloseBtnRules.addEventListener('click',()=>{
 
 
 function restart(){
-    auTourDe.classList.remove("active");
+    auTourDe.classList.remove("active");localStorage.clear();
     auTourDe.innerHTML = "Au tour du joueur 1";
     auTourDe.classList.remove("jeton_jaune");
     auTourDe.classList.add("jeton_rouge");
@@ -309,10 +314,11 @@ bRestart.addEventListener('click',()=>{
 
 bRestartTotal.addEventListener('click',()=>{
     restartTotal();
-    auTourDe.style.display = "inline";
     winBy.style.display = "none";
     endGameModel.style.display = "none";
     hasStarted = true;
+    bStart.style.display = "none";
+
 });
 
 plateauElt.addEventListener('click',function(click){
